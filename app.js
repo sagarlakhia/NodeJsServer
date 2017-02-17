@@ -48,8 +48,9 @@ app.post('/submit-user-data', urlencodedParser, function(req,res)
   })
 });
 
-app.delete('/delete-user', function(req,res)
+app.delete('/delete-user',urlencodedParser, function(req,res)
 {
+  var id = req.body.// IDEA:
   User.find({user:req.body.user}).remove(function(err, data){
     if(err) throw err;
     res.json(data);

@@ -20,6 +20,12 @@ var urlencodedParser = bodyParser.urlencoded({extended:false});
 var data = {
   name:'sagar'
 }
+var baseResponse =
+{
+  status:'success',
+  message:'Added'
+};
+
 app.get('/get-users', function(req,res)
 {
   User.find({}, function(err,data){
@@ -41,6 +47,15 @@ app.post('/submit-user-data', urlencodedParser, function(req,res)
     res.json(data);
   })
 });
+
+app.delete('/delete-user/:user', function(req,res)
+{
+  User.find({user:req.params.user}).remove(function(err, data){
+    if(err) throw err;
+    res.json(data);
+  });
+});
+
 app.listen(process.env.PORT || 3000, function(){
   console.log("listening on 3000");
 });

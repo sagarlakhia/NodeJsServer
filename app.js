@@ -41,4 +41,6 @@ app.post('/submit-user-data', urlencodedParser, function(req,res)
     res.json(data);
   })
 });
-app.listen(3000);
+app.listen(process.env.PORT || 3000, function(){
+  console.log("listening on 3000");
+});

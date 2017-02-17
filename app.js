@@ -48,9 +48,9 @@ app.post('/submit-user-data', urlencodedParser, function(req,res)
   })
 });
 
-app.delete('/delete-user/:user', function(req,res)
+app.delete('/delete-user', function(req,res)
 {
-  User.find({user:req.params.user}).remove(function(err, data){
+  User.find({user:req.body.user}).remove(function(err, data){
     if(err) throw err;
     res.json(data);
   });

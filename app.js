@@ -89,12 +89,12 @@ app.post('/update-user-data', urlencodedParser, function(req,res)
     $set: {name:req.body.name,
             age:req.body.age,
             profession:req.body.profession}
-  }
+  };
 
   var query =
   {
     email : req.body.email
-  }
+  };
 
   User.update(query, update, function(err, count,result)
   {

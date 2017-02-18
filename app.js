@@ -84,13 +84,15 @@ app.get('/delete-user/:email', function(req,res)
 
 app.post('/update-user-data',urlencodedParser, function(req,res)
 {
-  var update = {
+  var update =
+  {
     $set: {name:req.body.name,
             age:req.body.age,
             profession:req.body.profession}
   }
 
-  var query = {
+  var query =
+  {
     email : req.body.email;
   }
 
@@ -107,6 +109,7 @@ app.post('/update-user-data',urlencodedParser, function(req,res)
     }
   });
 });
+
  app.listen(process.env.PORT || 3000, function(){
    console.log("listening on 3000");
 });

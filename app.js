@@ -20,10 +20,16 @@ var urlencodedParser = bodyParser.urlencoded({extended:false});
 var data = {
   name:'sagar'
 }
-var baseResponse =
+var baseSuccessResponse =
 {
   status:'success',
-  message:'Added'
+  message:'Successful'
+};
+
+var baseFailResponse =
+{
+  status:'fail',
+  message:'UnSuccessful'
 };
 
 app.get('/get-users', function(req,res)
@@ -31,32 +37,49 @@ app.get('/get-users', function(req,res)
   User.find({}, function(err,data){
         if (err)
         {
-          res.send("");
+          res.json("");
         }
         else
         {
-            res.send(data);
+            res.json(data);
         }
       });
 });
 
 app.post('/submit-user-data', urlencodedParser, function(req,res)
 {
-  var user = User(req.body).save(function(err,data){
-    if(err) throw err;
-    res.json(data);
-  })
-});
-
-app.delete('/delete-user',urlencodedParser, function(req,res)
-{
-  var id = req.body.// IDEA:
-  User.find({user:req.body.user}).remove(function(err, data){
-    if(err) throw err;
-    res.json(data);
+  User.find({email:req.body.email},function(err, cursor){
+      if(err) throw err;
+      if(cursor.size == 0)
+      {
+        var user = User(req.body).save(function(err,data){
+          if(err) throw err;
+          //res.json(data);
+          res.json(baseSuccessResponse);
+        });
+      }
+      else{
+        res.json(baseFailResponse)
+      }
   });
 });
 
-app.listen(process.env.PORT || 3000, function(){
-  console.log("listening on 3000");
+app.get('/delete-user/:email', function(req,res)
+{
+  console.log(req.params.email);
+  User.find({email:req.params.email}).remove(function(err, data){
+    if(err)
+    {
+      res.send(baseFailResponse);
+    }
+    else
+    {
+      res.send(baseSuccessResponse);
+    }
+  });
+});
+
+//app.listen('3000');
+ app.listen(process.env.PORT || 3000, function(){
+   console.log("listening on 3000");
 });

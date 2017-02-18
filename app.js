@@ -82,7 +82,7 @@ app.get('/delete-user/:email', function(req,res)
   });
 });
 
-app.post('/update-user-data',urlencodedParser, function(req,res)
+app.post('/update-user-data', urlencodedParser, function(req,res)
 {
   var update =
   {
@@ -93,7 +93,7 @@ app.post('/update-user-data',urlencodedParser, function(req,res)
 
   var query =
   {
-    email : req.body.email;
+    email : req.body.email
   }
 
   User.update(query, update, function(err, count,result)

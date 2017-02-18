@@ -48,9 +48,9 @@ app.get('/get-users', function(req,res)
 
 app.post('/submit-user-data', urlencodedParser, function(req,res)
 {
-  User.find({email:req.body.user.email}, function(err, cursor){
+  User.find({email:req.body.email}.toArray(function(err, documents){
       if(err) throw err;
-      if(cursor.size == 0)
+      if(documents.size == 0)
       {
         var user = User(req.body).save(function(err,data){
           if(err) throw err;

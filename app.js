@@ -50,12 +50,15 @@ app.post('/submit-user-data', urlencodedParser, function(req,res)
 {
   User.find({email:req.body.email}, function(err, cursor){
       if(err) throw err;
-    
-      if(cursor.size == 0)
+
+      if(cursor.length == 0)
       {
         var user = User(req.body).save(function(err,data){
-          if(err) throw err;
-          //res.json(data);
+          if(err)
+          {
+          res.json(baseFailResponse);
+          }
+
           res.json(baseSuccessResponse);
         });
       }

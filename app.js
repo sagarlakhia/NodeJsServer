@@ -94,7 +94,8 @@ app.post('/update-user-data',urlencodedParser, function(req,res)
     email : req.body.email;
   }
 
-  User.update(query, update, function(err, count,result){
+  User.update(query, update, function(err, count,result)
+  {
     if(err) throw err;
     if(count > 0)
     {
@@ -105,7 +106,7 @@ app.post('/update-user-data',urlencodedParser, function(req,res)
       res.json(baseSuccessResponse);
     }
   });
-
+});
  app.listen(process.env.PORT || 3000, function(){
    console.log("listening on 3000");
 });

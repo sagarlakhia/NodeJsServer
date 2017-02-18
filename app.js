@@ -17,9 +17,7 @@ var userSchema = new mongoose.Schema({
 
 var User = mongoose.model('User', userSchema);
 var urlencodedParser = bodyParser.urlencoded({extended:false});
-var data = {
-  name:'sagar'
-}
+
 var baseSuccessResponse =
 {
   status:'success',
@@ -58,11 +56,11 @@ app.post('/submit-user-data', urlencodedParser, function(req,res)
           {
           res.json(baseFailResponse);
           }
-
           res.json(baseSuccessResponse);
         });
       }
-      else{
+      else
+      {
         res.json(baseFailResponse)
       }
   });
@@ -71,7 +69,8 @@ app.post('/submit-user-data', urlencodedParser, function(req,res)
 app.get('/delete-user/:email', function(req,res)
 {
   console.log(req.params.email);
-  User.find({email:req.params.email}).remove(function(err, data){
+  User.find({email:req.params.email}).remove(function(err, data)
+  {
     if(err)
     {
       res.send(baseFailResponse);
@@ -83,7 +82,30 @@ app.get('/delete-user/:email', function(req,res)
   });
 });
 
-//app.listen('3000');
+app.post('/update-user-data',urlencodedParser, function(req,res)
+{
+  var update = {
+    $set: {name:req.body.name,
+            age:req.body.age,
+            profession:req.body.profession}
+  }
+
+  var query = {
+    email : req.body.email;
+  }
+
+  User.update(query, update, function(err, count,result){
+    if(err) throw err;
+    if(count > 0)
+    {
+      res.json(baseSuccessResponse);
+    }
+    else
+    {
+      res.json(baseSuccessResponse);
+    }
+  });
+
  app.listen(process.env.PORT || 3000, function(){
    console.log("listening on 3000");
 });

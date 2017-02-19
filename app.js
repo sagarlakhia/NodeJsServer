@@ -1,14 +1,12 @@
-var http = require('http');
-var fs = require('fs');
 var mongoose = require('mongoose');
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
-var jsonParser = bodyParser.json();
 
 mongoose.connect('mongodb://testuser:testuser@ds051553.mlab.com:51553/listusers');
 
-var userSchema = new mongoose.Schema({
+var userSchema = new mongoose.Schema
+({
   name: String,
   age: Number,
   email: String,
@@ -30,6 +28,7 @@ var baseFailResponse =
   message:'UnSuccessful'
 };
 
+//To get all the list of users
 app.get('/get-users', function(req,res)
 {
   User.find({}, function(err,data){
@@ -44,6 +43,7 @@ app.get('/get-users', function(req,res)
       });
 });
 
+//To save the post data that the front -end sends
 app.post('/submit-user-data', urlencodedParser, function(req,res)
 {
   User.find({email:req.body.email}, function(err, cursor){
@@ -66,6 +66,7 @@ app.post('/submit-user-data', urlencodedParser, function(req,res)
   });
 });
 
+//To delete the user using get
 app.get('/delete-user/:email', function(req,res)
 {
   console.log(req.params.email);
@@ -82,6 +83,7 @@ app.get('/delete-user/:email', function(req,res)
   });
 });
 
+//To update the user data using post
 app.post('/update-user-data', urlencodedParser, function(req,res)
 {
   var update =
@@ -105,7 +107,7 @@ app.post('/update-user-data', urlencodedParser, function(req,res)
     }
     else
     {
-      res.json(baseSuccessResponse);
+      res.json(baseFailResponse);
     }
   });
 });
